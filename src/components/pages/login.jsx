@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-const LoginPage = () => {
+function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
 
-  const handleLogin = () => {
-    const validUsername = 'Meriel';
-    const validPassword = 'pass123';
-  
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const validUsername = 'user';
+    const validPassword = 'password';
     if (username === validUsername && password === validPassword) {
-      history.push('/chat');
+      history.push('/Smiley');
     } else {
       alert('Invalid username or password. Please try again.');
     }
   };
-  
 
   return (
     <div className="login-page">
@@ -24,7 +23,7 @@ const LoginPage = () => {
         <h2>Login to Smiley</h2>
         <form onSubmit={handleLogin}>
           <div className="form-group">
-            <label>Username or Email</label>
+            <label>Username</label>
             <input
               type="text"
               value={username}
@@ -46,6 +45,6 @@ const LoginPage = () => {
       </div>
     </div>
   );
-};
+}
 
 export default LoginPage;
