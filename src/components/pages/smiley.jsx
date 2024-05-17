@@ -1,7 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ChatBot from 'react-simple-chatbot';
 
 const Smiley = () => {
+  const [userName, setUserName] = useState('');
+  const [userPreferences, setUserPreferences] = useState('');
+
+  const handleNameInput = (value) => {
+    setUserName(value);
+    return '3';
+  };
+
+  const handleMoodInput = (value) => {
+    setUserPreferences(value);
+    return '4';
+  };
+
+  const handleUserPreferences = (value) => {
+    setUserPreferences(value);
+    return 'conversation';
+  };
+
   const steps = [
     {
       id: '1',
@@ -11,21 +29,21 @@ const Smiley = () => {
     {
       id: 'name',
       user: true,
-      trigger: '3',
+      trigger: ({ value }) => handleNameInput(value),
     },
     {
       id: '3',
-      message: 'Hi {previousValue}! How are you feeling today?',
+      message: `Hi ${userName}! How are you feeling today?`,
       trigger: 'mood',
     },
     {
       id: 'mood',
       user: true,
-      trigger: '4',
+      trigger: ({ value }) => handleMoodInput(value),
     },
     {
       id: '4',
-      message: 'That sounds {previousValue}. Is there anything I can do to cheer you up?',
+      message: `That sounds ${userPreferences}. Is there anything I can do to cheer you up?`,
       trigger: 'cheerUp',
     },
     {
@@ -48,14 +66,13 @@ const Smiley = () => {
     {
       id: 'conversation',
       user: true,
-      trigger: '5',
+      trigger: ({ value }) => handleUserPreferences(value),
     },
     {
       id: '5',
       message: 'I am glad to hear that. Feel free to share anything with me.',
       trigger: 'conversation',
     },
-    // Additional comforting conversations
     {
       id: 'comfort1',
       message: 'Remember, it\'s okay not to be okay sometimes. I\'m here to listen.',
